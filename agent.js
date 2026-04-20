@@ -19,13 +19,7 @@ async function main() {
   });
 
   const result = await agent.invoke({
-    messages: [
-      {
-        role: "user",
-        content:
-          "Latest model from OpenAI and when it was released? Also get me the API Pricing.₹",
-      },
-    ],
+    messages: [{ role: "user", content: "What is current weather in Mumbai?" }],
   });
 
   console.log(

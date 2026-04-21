@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node --env-file=.env agent.js",
+    "graph": "node --env-file=.env graph.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

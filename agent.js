@@ -2,6 +2,7 @@ import { writeFileSync } from "node:fs";
 import readline from "node:readline/promises";
 import { ChatGroq } from "@langchain/groq";
 import { context, createAgent, tool } from "langchain";
+import { MemorySaver } from "@langchain/langgraph";
 import { TavilySearch } from "@langchain/tavily";
 import { z } from "zod/v4";
 
@@ -35,9 +36,12 @@ async function main() {
     },
   );
 
+  const checkpointer = new MemorySaver();
+
   const agent = createAgent({
     model: model,
     tools: [search, calendarEvents],
+    checkpointer: checkpointer,
   });
 
   const rl = readline.createInterface({

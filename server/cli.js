@@ -1,48 +1,9 @@
 import { writeFileSync } from "node:fs";
 import readline from "node:readline/promises";
-import { ChatGroq } from "@langchain/groq";
-import { context, createAgent, tool } from "langchain";
-import { MemorySaver } from "@langchain/langgraph";
-import { TavilySearch } from "@langchain/tavily";
-import { z } from "zod/v4";
+import { getAgent } from "./agent.js";
 
 async function main() {
-  const model = new ChatGroq({
-    model: "openai/gpt-oss-120b",
-    temperature: 0,
-  });
-
-  const search = new TavilySearch({
-    maxResults: 3,
-    topic: "general",
-  });
-
-  const calendarEvents = tool(
-    async ({ query }) => {
-      return JSON.stringify([
-        {
-          title: "Meeting with Friend",
-          time: "2PM",
-          location: "GMEET",
-        },
-      ]);
-    },
-    {
-      name: "get-calendar-events",
-      description: "Call to get calendar events",
-      schema: z.object({
-        query: z.string().describe("The query to use in calendar event search"),
-      }),
-    },
-  );
-
-  const checkpointer = new MemorySaver();
-
-  const agent = createAgent({
-    model: model,
-    tools: [search, calendarEvents],
-    checkpointer: checkpointer,
-  });
+  const agent = getAgent();
 
   const rl = readline.createInterface({
     input: process.stdin,

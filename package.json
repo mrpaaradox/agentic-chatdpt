@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --env-file=.env agent.js",
-    "graph": "node --env-file=.env graph.js",
+    "dev": "node --env-file=.env server/index.js & pnpm --prefix client dev",
+    "dev:cli": "node --env-file=.env server/cli.js",
+    "dev:server": "node --env-file=.env server/index.js",
+    "graph": "node --env-file=.env server/graph-cli.js",
+    "biryani": "node --env-file=.env server/biryani.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +20,8 @@
     "@langchain/groq": "^1.2.0",
     "@langchain/langgraph": "^1.2.9",
     "@langchain/tavily": "^1.2.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
     "langchain": "^1.3.3",
     "zod": "^4.3.6"
   }
